@@ -1,0 +1,35 @@
+
+<%- include('./partials/head') %> 
+
+<div class="container">  
+  <div class="title_user">
+    <p>Bienvenido <span id="title_user"></span></p>
+  </div>
+
+  <h2>Entrega Nro. 06 - WebSockets</h2>  
+
+  <!-- action="/api/productos" method="post" -->
+  <form class="formulario">
+    <input id="title" class="inputs" name="title" type="text" placeholder="Nombre Producto">    
+    <input id="price" class="inputs" name="price" type="text" placeholder="Precio">
+    <input id="thumbnail" class="inputs" name="thumbnail" type="text" placeholder="Url Imagen">
+    <button id="btn_guardar" class="btn">Guardar</button>
+  </form>    
+  
+</div>
+
+<div class="container">
+  
+  <h2 id="productosTabla_h2" class="mensaje">Productos Cargados (<%= products.length %>)</h2>  
+  <table id="productosTabla"></table>  
+  
+  <div class="chat">
+    <h2>Chat de Usuarios</h2>
+    <div id="chat_container" class="chat_container">asasas</div>
+    <input id="input_msj" class="input_msj" type="text" placeholder="Mensaje (ENTER para enviar)">
+  </div>
+</div>
+
+<%- include('./partials/footer') %> 
+
+

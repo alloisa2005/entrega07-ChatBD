@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  text-decoration: none;  
+  display: inline-block;
+  border: 1px solid black;
+  padding: 5px 8px;
+  width:170px;
+  color: black;    
+  font-weight: bold;
+  background-color:rgb(216, 211, 211);
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container h2 {
+  margin: 1em 0;  
+}
+
+.formulario {
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  gap: 10px;
+}
+
+.inputs {
+  padding: 5px 8px; 
+  outline: none;
+  font-size: .9rem;
+  width: 300px;
+}
+
+button {
+  padding: 5px 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 10px 0;
+  width:170px; 
+  background-color:rgb(216, 211, 211);
+  border: 1px solid black;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table { 
+  width: 80%; margin: 15px auto;
+  text-align: center;  
+}
+
+th {
+  font-size: 26px;    
+}
+
+img {  
+  height: 120px;
+  object-fit: cover;
+}
+
+.tabla_item {
+  font-weight: bold;
+}
+
+.no_prod_title {
+  font-size: 23px;
+  margin: 15px 0;  
+}
+
+.chat {
+  width: 90%; 
+  margin: 30px auto;  
+}
+
+.chat_container {
+  border: 1px solid black;
+  margin-bottom: 15px;
+  padding: 8px;
+}
+
+.input_msj {
+  width: 60%;
+  padding:8px 10px;
+  font-size: 1rem;
+}
+
+.txt_green {
+  color: green;
+  font-style: italic;
+}
+
+.txt_brown {
+  color: brown;
+}
+
+.txt_blue {
+  color: blue;
+  font-weight: bold;
+}
+
+.title_user {
+  width: 100%;
+  text-align: end;  
+  padding: 10px 0;
+  font-size: 1.1rem;
+}
+
+.title_user span {
+  font-weight: bold;
+}
