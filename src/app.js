@@ -2,8 +2,13 @@
 const express = require('express');
 const productRouter = require('./routes/products');
 const { Server } = require('socket.io');
-const Contenedor = require("./classes/contenedor");
 
+const Contenedor = require("./classes/contenedor");
+const options = require('./options/mysql.config')
+
+const Product = require('./classes/Product.model');
+const producto = new Product(options, 'productos')
+ 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -23,17 +28,16 @@ app.use(express.urlencoded({extended:true}));
 
 let user;
 
-let products = [];
-contenedor.getAll().then(res => {products = res.data;}); 
-
+let products = []; 
 let mensajes = [];
+
 cont_mensajes.getAll().then(res => {mensajes = res.data;});
 
 app.get('/', (req, res) => {  
   res.render('home', {products, user});
 });
 
-app.use('/api/productos', productRouter)
+app.use('/api/productos', productRouter) 
 
 
 io.on('connection', socket => {  
@@ -47,19 +51,21 @@ io.on('connection', socket => {
     
     socket.emit('userTitle', user);
     
-    io.emit('prodHistory', products)
+    producto.getAll().then( res => {
+      products = res;
+      io.emit('prodHistory', products)
+    })      
+    
     socket.emit('chatHistory', mensajes)
   })
 
   // cuando guardan un nuevo producto
-  socket.on('newProduct', data => {    
-    contenedor.save(data)
-      .then(res => {
-        if(res.status === 'success'){
-          products.push(data);
-          io.emit('prodHistory', products)
-        }
-      })
+  socket.on('newProduct', data => {        
+    producto.insertProduct(data); 
+    producto.getAll().then( res => {
+      products = res;
+      io.emit('prodHistory', products)
+    })         
   })
 
   //Cuando envian un msj en el chat

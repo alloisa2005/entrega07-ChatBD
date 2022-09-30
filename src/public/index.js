@@ -40,7 +40,7 @@ btn_guardar.addEventListener('click', (e) => {
 
   let obj = {
     title:title.value, 
-    price:parseInt(price.value), 
+    price:parseFloat(price.value), 
     thumbnail:thumbnail.value,
     uploaded: user
   }  
