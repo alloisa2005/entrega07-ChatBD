@@ -1,12 +1,12 @@
 
 const express = require('express');
-const app = express();
-
 const productRouter = require('./routes/products');
 const { Server } = require('socket.io');
+const Contenedor = require("./classes/contenedor");
+
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-const Contenedor = require("./classes/contenedor");
 let contenedor = new Contenedor('productos.txt');
 let cont_mensajes = new Contenedor('mensajes.txt');
 
