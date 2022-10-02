@@ -2,8 +2,6 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const Contenedor = require('../classes/contenedor');
-let contenedor = new Contenedor('productos.txt');
 
 // Middleware para validar si existe el ID del producto
 const validarProductId = (req,res,next) => {
