@@ -1,12 +1,10 @@
 
-const options = {
-  client: 'mysql',
+const optionsSQLITE = {
+  client: 'sqlite3',
   connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'ecommerce'
-  }
+      filename: './db/chat.sqlite'
+  },
+  useNullAsDefault: true
 }
 
-module.exports = options
+module.exports = optionsSQLITE

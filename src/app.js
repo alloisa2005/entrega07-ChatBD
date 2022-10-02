@@ -3,17 +3,22 @@ const express = require('express');
 const productRouter = require('./routes/products');
 const { Server } = require('socket.io');
 
-const Contenedor = require("./classes/contenedor");
-const options = require('./options/mysql.config')
+// Archivos de opciones para ambos gestores de BD
+const optionsMYSQL = require('./options/mysql.config')
+const optionsSQLITE = require('./options/sqlite.config')
+//////////////////////////////////////////////////////////////////////////////////////
 
 const Product = require('./classes/Product.model');
-const producto = new Product(options, 'productos')
- 
+const Chat = require('./classes/Chat.model');
+
+// Instancio las clases pasandole las opciones de cada uno y la tabla correspondiente.
+const producto = new Product(optionsMYSQL, 'productos');
+const chat = new Chat(optionsSQLITE, 'mensaje');
+//////////////////////////////////////////////////////////////////////////////////////
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-let contenedor = new Contenedor('productos.txt');
-let cont_mensajes = new Contenedor('mensajes.txt');
 
 const server = app.listen(PORT, () => console.log(`Server Up on Port ${PORT}`));
 
@@ -26,12 +31,11 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+/////// Inicializando variables
 let user;
-
 let products = []; 
 let mensajes = [];
-
-cont_mensajes.getAll().then(res => {mensajes = res.data;});
+//////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/', (req, res) => {  
   res.render('home', {products, user});
@@ -51,12 +55,17 @@ io.on('connection', socket => {
     
     socket.emit('userTitle', user);
     
+    // Busco los productos y lo "emito" para todos los conectados
     producto.getAll().then( res => {
       products = res;
       io.emit('prodHistory', products)
     })      
     
-    socket.emit('chatHistory', mensajes)
+    chat.getAll().then( res => {
+      mensajes = res;
+      socket.emit('chatHistory', mensajes)
+    })
+    
   })
 
   // cuando guardan un nuevo producto
@@ -70,13 +79,12 @@ io.on('connection', socket => {
 
   //Cuando envian un msj en el chat
   socket.on('message', data => {    
-    cont_mensajes.save(data)
-      .then(res => {
-        if(res.status === 'success'){
-          mensajes.push(data);
-          io.emit('chatHistory', mensajes)
-        }
-      })    
+    chat.insertMsg(data);
+    chat.getAll().then( res => {
+      mensajes = res;
+      io.emit('chatHistory', mensajes)
+    })
+       
   })  
 });
 

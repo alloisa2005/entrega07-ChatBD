@@ -23,7 +23,7 @@ class Product {
   }
 
   getAll = async () => {
-    // Le agregué el orer by para que siempre al principio esten los productos recién cargados
+    // Le agregué el order by para que siempre al principio esten los productos recién cargados
     let respuesta = await this.database(this.tabla).select('*').orderBy('id', 'desc');        
     return JSON.parse( JSON.stringify(respuesta) );      
   }
@@ -36,12 +36,3 @@ class Product {
 module.exports = Product;
 
 
-/* if (!exists) {
-        return database.schema.createTable('productos', function(t) {
-          t.increments('id').primary();
-          t.string('title', 20);
-          t.float('price');
-          t.string('thumbnail', 200);
-          t.string('uploaded', 70);
-        });
-      } */
