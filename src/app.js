@@ -13,7 +13,7 @@ const Chat = require('./classes/Chat.model');
 
 // Instancio las clases pasandole las opciones de cada uno y la tabla correspondiente.
 const producto = new Product(optionsMYSQL, 'productos');
-const chat = new Chat(optionsSQLITE, 'mensaje');
+const chat = new Chat(optionsSQLITE, 'mensajes');
 //////////////////////////////////////////////////////////////////////////////////////
 
 const app = express();
