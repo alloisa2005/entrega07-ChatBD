@@ -3,15 +3,6 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 
-// Middleware para validar si existe el ID del producto
-const validarProductId = (req,res,next) => {
-  let { id } = req.params;  
-
-  let existe = products.some(p => p.id === id);
-
-  existe ? next() : res.status(200).send({ status:'ERROR', result: `No existe producto con ID ${id}`});
-}
-
 // Middleware para validar lo que viene en el body como dato de entrada
 const validarInputsProduct = (req,res,next) => {
   let producto = req.body;
@@ -24,11 +15,11 @@ const validarInputsProduct = (req,res,next) => {
   next();
 }
 
-router.get('/', (req, res) => {  
-  res.status(200).send({status: 'OK', result:products});
+router.get('/', (req, res) => {    
+  res.status(200).send({status: 'OK', result: products});
 });
 
-router.get('/:id', validarProductId, (req, res) => {
+router.get('/:id', (req, res) => {
   try {
     let {id} = req.params;
     let prod = products.find( p => p.id === id);  
@@ -56,7 +47,7 @@ router.post('/', validarInputsProduct, async (req, res) => {
 });
 
 
-router.put('/:id', validarProductId, validarInputsProduct, (req, res) => {
+router.put('/:id', validarInputsProduct, (req, res) => {
   try {
     let {id} = req.params;
 
@@ -77,7 +68,7 @@ router.put('/:id', validarProductId, validarInputsProduct, (req, res) => {
 });
 
 
-router.delete('/:id', validarProductId, (req, res) => {
+router.delete('/:id', (req, res) => {
   try {
     let {id} = req.params;
     let prod = products.find( p => p.id === id);  
@@ -88,5 +79,6 @@ router.delete('/:id', validarProductId, (req, res) => {
     res.status(404).send({status: 'ERROR', result: error.message})
   }
 });
+
 
 module.exports = router;

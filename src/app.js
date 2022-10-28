@@ -1,6 +1,8 @@
 
 const express = require('express');
 const productRouter = require('./routes/products');
+const productFaker = require('./routes/productFaker.routes');
+
 const { Server } = require('socket.io');
 
 // Archivos de opciones para ambos gestores de BD
@@ -42,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/productos', productRouter) 
-
+app.use('/api/productos-test', productFaker)   // Ruta para trabajar con FAKER
 
 io.on('connection', socket => {  
 
